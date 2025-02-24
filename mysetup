@@ -1,0 +1,36 @@
+#!/bin/bash
+
+WHERE=$PWD
+
+#cat < __EOF > /etc/systemd/system/weatherdisplay.api.service
+cat << __EOF > temp.ok
+[Unit]
+Description=WeatherDisplay.Api
+After=network-online.target firewalld.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=$PWD/WeatherDisplay.Api
+ExecStart=sudo $HOME/.dotnet/dotnet $PWD/WeatherDisplay.Api/WeatherDisplay.Api.dll
+ExecStop=/bin/kill $MAINPID
+KillSignal=SIGTERM
+KillMode=process
+SyslogIdentifier=WeatherDisplay.Api
+TimeoutStartSec=60
+TimeoutStopSec=20
+
+User=dwade
+Group=dwade
+
+Restart=no
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=DOTNET_ROOT=$HOME/.dotnet
+
+[Install]
+WantedBy=multi-user.target
+
+__EOF
+
