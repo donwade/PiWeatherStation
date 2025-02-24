@@ -1,0 +1,3 @@
+set -x
+yes "$PISSWORD" | sudo systemctl stop weatherdisplay.api
+

@@ -1,0 +1,1 @@
+journalctl -u weatherdisplay.api.service -f -n 400 -o short-iso-precise

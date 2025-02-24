@@ -1,0 +1,3 @@
+yes "$PISSWORD" | sudo systemctl start weatherdisplay.api
+sudo systemctl stop weatherdisplay.api
+sudo systemctl restart weatherdisplay.api
